@@ -2,7 +2,8 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     reactify = require('reactify'),
     source = require('vinyl-source-stream'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    browserSync = require('browser-sync').create();
 
 var config = {
   paths: {
@@ -10,8 +11,8 @@ var config = {
     js: './src/scripts/**/*.js',
     images: './src/images/*',
     css: [
-      'src/styles/main.css',
-      'node_modules/foundation-sites/dist/foundation.css'
+      './src/styles/flexboxgrid.css',
+      './src/styles/main.css'
     ],
     mainJs: './src/scripts/main.js',
     dist: './dist'
@@ -48,4 +49,12 @@ gulp.task('watch', function() {
   gulp.watch(config.paths.js, ['js'])
 });
 
-gulp.task('default', ['html', 'js', 'css', 'images', 'watch']);
+gulp.task('browser-sync', function() {
+  browserSync.init({
+    server: {
+      baseDir: config.paths.dist
+    }
+  });
+});
+
+gulp.task('default', ['html', 'js', 'css', 'images', 'watch', 'browser-sync']);

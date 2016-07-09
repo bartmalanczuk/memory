@@ -1,0 +1,123 @@
+.board {
+  width: 800px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+.card__container {
+  position: relative;
+  height: 140px;
+  perspective: 800px;
+}
+
+.card__container:hover .card {
+  transform: rotateY( 180deg );
+}
+
+.card {
+  position: absolute;
+  top: 7%;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.card__obverse {
+  background-color: #fff;
+  border: 2px solid #000;
+  position: absolute;
+  top: 7%;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+  backface-visibility: hidden;
+}
+
+.card__obverse__pattern {
+  background-color: #A7DBD8;
+  border: 2px solid #000;
+  border-radius: 5px;
+  position: absolute;
+  top: 7%;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+}
+
+.card__reverse {
+  background-color: #fff;
+  transform: rotateY( 180deg );
+  backface-visibility: hidden;
+  top: 7%;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+  position: absolute;
+  border: 2px solid #000;
+  text-align: center;
+  line-height: 95px;
+}
+
+.card__reverse__image {
+  font-size: 4em;
+}
+
+.card__reverse__image.monkey:before {
+  content: "🐒";
+}
+
+.card__reverse__image.angel:before {
+  content: "😇";
+}
+
+.card__reverse__image.elephant:before {
+  content: "🐘";
+}
+
+.card__reverse__image.apple:before {
+  content: "🍏";
+}
+
+.card__reverse__image.pear:before {
+  content: "🍐";
+}
+
+.card__reverse__image.robot:before {
+  content: "🤖";
+}
+
+.card__reverse__image.alien:before {
+  content: "👽";
+}
+
+.card__reverse__image.shell:before {
+  content: "🐚";
+}
+
+.card__reverse__image.ball:before {
+  content: "⚽️";
+}
+
+.card__reverse__image.car:before {
+  content: "🚗";
+}
+
+.card__reverse__image.anchor:before {
+  content: "⚓️";
+}
+
+.card__reverse__image.telephone:before {
+  content: "☎️";
+}
+
+.card__reverse__image.heart:before {
+  content: "❤️";
+}
