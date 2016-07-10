@@ -1,21 +1,26 @@
 const React = require('react');
-const Deck = require('./Deck');
 const Card = require('./Card');
-const Grid = require('./Grid');
+const Deck = require('./Deck');
+
 
 class Board extends React.Component {
   render() {
-    let deck = new Deck(this.props.size);
-
     return (
-      <Grid deck={deck}/>
+      <div className="board">
+        <div className="row">
+          {
+            this.props.deck.cardsInGame().map((symbol, index) => (
+              <Card symbol={symbol} key={index}/>
+            ))
+          }
+        </div>
+      </div>
     );
   }
-}
-
-Board.propTypes = {
-  size: React.PropTypes.number.isRequired
 };
 
+Board.propTypes = {
+  deck: React.PropTypes.instanceOf(Deck).isRequired
+};
 
 module.exports = Board;

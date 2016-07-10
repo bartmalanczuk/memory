@@ -47,6 +47,7 @@ gulp.task('images', function() {
 gulp.task('watch', function() {
   gulp.watch(config.paths.html, ['html'])
   gulp.watch(config.paths.js, ['js'])
+  gulp.watch(config.paths.css, ['css'])
 });
 
 gulp.task('browser-sync', function() {

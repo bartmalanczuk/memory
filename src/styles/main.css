@@ -16,18 +16,12 @@ body, html {
   perspective: 800px;
 }
 
-.card__container:hover .card {
-  transform: rotateY( 180deg );
-}
-
 .card {
   position: absolute;
   top: 7%;
   right: 7%;
   bottom: 7%;
   left: 7%;
-  transform-style: preserve-3d;
-  transition: transform 1s;
 }
 
 .card__obverse {
@@ -38,7 +32,7 @@ body, html {
   right: 7%;
   bottom: 7%;
   left: 7%;
-  backface-visibility: hidden;
+  /*backface-visibility: hidden;*/
 }
 
 .card__obverse__pattern {
@@ -54,8 +48,6 @@ body, html {
 
 .card__reverse {
   background-color: #fff;
-  transform: rotateY( 180deg );
-  backface-visibility: hidden;
   top: 7%;
   right: 7%;
   bottom: 7%;
@@ -66,58 +58,78 @@ body, html {
   line-height: 95px;
 }
 
-.card__reverse__image {
+.card__reverse__symbol {
   font-size: 4em;
 }
 
-.card__reverse__image.monkey:before {
+.card__reverse__symbol.monkey:before {
   content: "🐒";
 }
 
-.card__reverse__image.angel:before {
+.card__reverse__symbol.angel:before {
   content: "😇";
 }
 
-.card__reverse__image.elephant:before {
+.card__reverse__symbol.elephant:before {
   content: "🐘";
 }
 
-.card__reverse__image.apple:before {
+.card__reverse__symbol.apple:before {
   content: "🍏";
 }
 
-.card__reverse__image.pear:before {
+.card__reverse__symbol.pear:before {
   content: "🍐";
 }
 
-.card__reverse__image.robot:before {
+.card__reverse__symbol.robot:before {
   content: "🤖";
 }
 
-.card__reverse__image.alien:before {
+.card__reverse__symbol.alien:before {
   content: "👽";
 }
 
-.card__reverse__image.shell:before {
+.card__reverse__symbol.shell:before {
   content: "🐚";
 }
 
-.card__reverse__image.ball:before {
+.card__reverse__symbol.ball:before {
   content: "⚽️";
 }
 
-.card__reverse__image.car:before {
+.card__reverse__symbol.car:before {
   content: "🚗";
 }
 
-.card__reverse__image.anchor:before {
+.card__reverse__symbol.anchor:before {
   content: "⚓️";
 }
 
-.card__reverse__image.telephone:before {
+.card__reverse__symbol.telephone:before {
   content: "☎️";
 }
 
-.card__reverse__image.heart:before {
+.card__reverse__symbol.heart:before {
   content: "❤️";
+}
+
+.flip-enter {
+  transform: rotateY( 270deg );
+  transform-style: preserve-3d;
+  transition: transform 250ms ease-out 250ms;
+}
+
+.flip-enter.flip-enter-active {
+  transform: rotateY( 360deg );
+}
+
+.flip-leave {
+  transform-style: preserve-3d;
+  transition: transform 250ms ease-in;
+  backface-visibility: hidden;
+}
+
+.flip-leave.flip-leave-active {
+  transform: rotateY( 90deg );
 }

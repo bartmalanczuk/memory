@@ -1,18 +1,18 @@
 jest.unmock('../Board');
 const React = require('react');
 const sd = require('skin-deep');
-const Board = require('../Board');
+const Card = require('../Card');
 const Deck = require('../Deck');
-const Grid = require('../Grid');
-let board;
+const Board = require('../Board');
+let deck, tree;
 
-describe('Board', () => {
+describe("Board", () => {
   beforeEach(() => {
-    const size = 12;
+    deck = new Deck(12);
+    tree = sd.shallowRender(<Board deck={deck}/>);
   });
 
-  it('renders Grid', () => {
-    board = sd.shallowRender(<Board size={size}/>);
-    expect(board.type).toEqual(Grid);
+  it("renders cards", () => {
+    expect(tree.everySubTree('Card').length).toBeTruthy()
   });
-});
+})

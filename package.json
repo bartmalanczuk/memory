@@ -7,7 +7,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "react": "^15.0.1",
+    "react": "^15.2.1",
+    "react-addons-css-transition-group": "^15.2.1",
     "react-dom": "^15.0.1"
   },
   "devDependencies": {

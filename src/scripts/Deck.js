@@ -32,35 +32,4 @@ Deck.availableSymbols = [
   'heart'
 ];
 
-const generate = function(width, height) {
-    const availableSymbols = [
-      'monkey',
-      'angel',
-      'elephant',
-      'apple',
-      'pear',
-      'robot',
-      'alien',
-      'shell',
-      'ball',
-      'car',
-      'anchor',
-      'telephone',
-      'heart'
-    ];
-    const size = height * width;
-    let usedSymbols = availableSymbols.sort(() => ( 0.5 - Math.random()))
-      .slice(0, Math.floor(size/2));
-    let symbolsForCards = usedSymbols.concat(usedSymbols)
-      .sort(() => ( 0.5 - Math.random()));
-    let cards = Array(height).fill([])
-      .map((v, rowIdx) => (
-        symbolsForCards
-          .slice(rowIdx * width, (rowIdx+1) * width)
-          .map((v, colIdx) => ({image: v, index: (width*rowIdx)+colIdx}))
-      ));
-
-    return cards;
-}
-
 module.exports = Deck;
