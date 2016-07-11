@@ -1,5 +1,5 @@
 const React = require('react');
-const Card = require('./Card');
+const Card = require('../card/Card');
 const Deck = require('./Deck');
 
 
