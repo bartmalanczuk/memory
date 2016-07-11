@@ -1,15 +1,31 @@
 const React = require('react');
 const Card = require('../card/Card');
-const Deck = require('./Deck');
-
 
 class Board extends React.Component {
+  constructor(props) {
+    super();
+
+    this._symbolsInGame = this.constructor.availableSymbols
+      .sort(() => ( 0.5 - Math.random()))
+      .slice(0, props.size);
+
+  }
+
+  symbolsInGame() {
+    return this._symbolsInGame;
+  }
+
+  cardsInGame() {
+    return this.symbolsInGame().concat(this.symbolsInGame())
+      .sort(() => ( 0.5 - Math.random()));
+  }
+
   render() {
     return (
       <div className="board">
         <div className="row">
           {
-            this.props.deck.cardsInGame().map((symbol, index) => (
+            this.cardsInGame().map((symbol, index) => (
               <Card symbol={symbol} key={index}/>
             ))
           }
@@ -19,8 +35,24 @@ class Board extends React.Component {
   }
 };
 
+Board.availableSymbols = [
+  'monkey',
+  'angel',
+  'elephant',
+  'apple',
+  'pear',
+  'robot',
+  'alien',
+  'shell',
+  'ball',
+  'car',
+  'anchor',
+  'telephone',
+  'heart'
+];
+
 Board.propTypes = {
-  deck: React.PropTypes.instanceOf(Deck).isRequired
+  size: React.PropTypes.number.isRequired
 };
 
 module.exports = Board;
