@@ -14,22 +14,40 @@ class Card extends React.Component {
     this.setState({isFlipped: !this.state.isFlipped});
   }
 
+  symbol() {
+    return this.props.symbol;
+  }
+
+  hide() {
+    this.setState({isHidden: true});
+  }
+
   render() {
-    const side = (this.state.isFlipped ? <Reverse symbol={this.props.symbol} key="aoeu"/> : <Obverse key="ueoa"/>)
+    let side;
+    if(this.state.isHidden) {
+      side = <div></div>;
+    }
+    else if(this.state.isFlipped) {
+      side = <Reverse symbol={this.props.symbol} key="reverse"/>;
+    }
+    else {
+      side = <Obverse key="obverse"/>;
+    }
     return (
-      <div className='col-md-2 card__container' onClick={this.flip}>
-        <div className='card'>
-          <ReactCSSTransitionGroup transitionName="flip" transitionEnterTimeout={500} transitionLeaveTimeout={250}>
+        <div className='card' onClick={() => { this.props.onCardClick(this) }}>
+          <ReactCSSTransitionGroup transitionName="flip" transitionEnterTimeout={Card.animationDuration} transitionLeaveTimeout={Card.animationDuration/2}>
             {side}
           </ReactCSSTransitionGroup>
-        </div>
       </div>
     );
   }
 }
 
+Card.animationDuration = 500;
+
 Card.propTypes = {
-  symbol: React.PropTypes.string.isRequired
+  symbol: React.PropTypes.string.isRequired,
+  onCardClick: React.PropTypes.func.isRequired
 }
 
 module.exports = Card;

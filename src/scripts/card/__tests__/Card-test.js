@@ -2,58 +2,60 @@ jest.unmock('../Card');
 const React = require('react');
 const sd = require('skin-deep');
 const Card = require('../Card');
-let tree, symbol;
 
-const showsObverse = () => {
-  it('renders Obverse', () => {
-    expect(tree.subTree('Obverse')).toBeTruthy();
-  });
-
-  it('does not render Reverse', () => {
-    expect(tree.subTree('Reverse')).toBeFalsy();
-  });
-}
-
-const showsReverse = () => {
-  it('renders Reverse', () => {
-    expect(tree.subTree('Reverse')).toBeTruthy();
-  });
-
-  describe('Reverse component', () => {
-    it('has passed symbol field', () => {
-      expect(tree.subTree('Reverse').props.symbol).toEqual(symbol);
-    });
-  });
-
-  it('does not render Obverse', () => {
-    expect(tree.subTree('Obverse')).toBeFalsy();
-  });
-}
 
 describe('Card', () => {
-  beforeEach(() => {
-    symbol = "apple";
-    tree = sd.shallowRender(<Card symbol={symbol}/>);
-  });
-
-  describe('after initialization', () => {
-    showsObverse();
-  });
-
-  describe('after click', () => {
+  describe('rendering', () => {
+    let tree, key, symbol, card, onCardClick;
     beforeEach(() => {
-      tree.props.onClick();
+      symbol = "apple";
+      onCardClick= jasmine.createSpy();
+      card = <Card symbol={symbol} onCardClick={onCardClick} />
+      tree = sd.shallowRender(card);
     });
 
-    showsReverse();
+    describe('onClick', () => {
+      beforeEach(() => {
+        tree.props.onClick();
+      });
+
+      it('calls props.onCardClick', () => {
+        expect(onCardClick).toHaveBeenCalled();
+      });
+    });
   });
 
-  describe('after double click', () => {
+  describe('methods', () => {
+    let card, onCardClick, symbol;
     beforeEach(() => {
-      tree.props.onClick();
-      tree.props.onClick();
+      onCardClick = jasmine.createSpy();
+      symbol = "apple"
+      card = new Card({onCardClick: onCardClick, symbol: symbol}); 
     });
 
-    showsObverse();
+    describe('flip', () => {
+      it('changes state.isFlipped from true to false', () => {
+        spyOn(card, 'setState');
+        card.state.isFlipped = true;
+        card.flip();
+        expect(card.setState).toHaveBeenCalledWith({isFlipped: false})
+      });
+
+      it('changes state.isFlipped from false to true', () => {
+        spyOn(card, 'setState');
+        card.state.isFlipped = false;
+        card.flip();
+        expect(card.setState).toHaveBeenCalledWith({isFlipped: true})
+      });
+    });
+
+    describe('hide', () => {
+      it('changes state.isHidden from false to true', () => {
+        spyOn(card, 'setState');
+        card.state.isHidden = false;
+        card.hide();
+        expect(card.setState).toHaveBeenCalledWith({isHidden: true});
+      });
+    });
   });
 });

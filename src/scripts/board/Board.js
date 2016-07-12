@@ -4,32 +4,60 @@ const Card = require('../card/Card');
 class Board extends React.Component {
   constructor(props) {
     super();
-
-    this._symbolsInGame = this.constructor.availableSymbols
-      .sort(() => ( 0.5 - Math.random()))
-      .slice(0, props.size);
-
+    this._size = props.size;
+    this._symbolsInGame = this.symbolsInGame();
+    this._cards = this.cardsInGame();
+    this._currentPair = [];
+    this._animationInProgress = false;
+    this.onCardClick = this.onCardClick.bind(this);
   }
 
   symbolsInGame() {
-    return this._symbolsInGame;
+    return this.constructor.availableSymbols
+      .sort(() => ( 0.5 - Math.random()))
+      .slice(0, this._size);
   }
 
   cardsInGame() {
-    return this.symbolsInGame().concat(this.symbolsInGame())
-      .sort(() => ( 0.5 - Math.random()));
+    const choosenSymbols = this.symbolsInGame();
+    return choosenSymbols.concat(choosenSymbols)
+      .sort(() => ( 0.5 - Math.random()))
+      .map((symbol, key) => ({symbol: symbol, key: key}));
+  }
+
+  onCardClick(card) {
+    if(this._animationInProgress) return;
+    this._currentPair.push(card);
+    card.flip();
+    if(this._currentPair.length === 2) {
+      this._animationInProgress = true;
+      setTimeout(() => {
+        if(this._currentPair[0].symbol() === this._currentPair[1].symbol()) {
+          this._currentPair[0].hide();
+          this._currentPair[1].hide();
+        }
+        else {
+          this._currentPair[0].flip();
+          this._currentPair[1].flip();
+        }
+        this._currentPair = [];
+        this._animationInProgress = false;
+      }, Card.animationDuration)
+    }
   }
 
   render() {
     return (
       <div className="board">
         <div className="row">
-          {
-            this.cardsInGame().map((symbol, index) => (
-              <Card symbol={symbol} key={index}/>
-            ))
-          }
-        </div>
+            {
+              this._cards.map((card) => (
+                <div className='col-md-2 card__container' key={card.key}>
+                  <Card {...card} onCardClick={this.onCardClick}/>
+                </div>
+                ))
+            }
+          </div>
       </div>
     );
   }
